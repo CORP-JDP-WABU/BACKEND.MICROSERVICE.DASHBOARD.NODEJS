@@ -27,7 +27,7 @@ import configuration from './config/configuration';
         ttl: config.get('http.throttle.ttl'),
         limit: config.get('http.throttle.limit'),
       }),
-    })
+    }),
   ],
   controllers: [AppController],
   providers: [

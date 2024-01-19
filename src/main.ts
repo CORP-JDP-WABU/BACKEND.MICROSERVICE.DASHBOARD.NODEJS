@@ -30,6 +30,17 @@ async function bootstrap() {
 
   app.enableCors();
 
+  /*app.connectMicroservice({
+    transport: Transport.RMQ,
+    options: {
+      urls: [config.get('rabbitmq.url')],
+      queue: 'nestjs_queue',
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });*/
+
   await app.startAllMicroservices();
   await app.listen(config.get('http.port'), config.get('http.host'));
 
