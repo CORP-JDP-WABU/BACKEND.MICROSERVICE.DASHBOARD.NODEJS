@@ -8,11 +8,14 @@ export type DashboardsDocument = Dashboards & mongoose.Document;
 export class Dashboards {
   @Prop(
     raw({
-      idUniversity: mongoose.Types.ObjectId,
+      _id: mongoose.Types.ObjectId,
       name: String,
     }),
   )
-  university: string;
+  university: {
+    _id: mongoose.Types.ObjectId;
+    name: string;
+  };
 
   @Prop(
     raw({
@@ -31,13 +34,11 @@ export class Dashboards {
     raw({
       type: [
         {
-          idStudent: mongoose.Types.ObjectId,
-          profilePicture: String,
-          fullName: String,
+          _id: mongoose.Types.ObjectId,
           points: Number,
           favoriteCourses: [
             {
-              idCourse: mongoose.Types.ObjectId,
+              _id: mongoose.Types.ObjectId,
               name: String,
             },
           ],
@@ -46,12 +47,10 @@ export class Dashboards {
     }),
   )
   students: {
-    idStudent: mongoose.Types.ObjectId;
-    profilePicture: string;
-    fullName: string;
+    _id: mongoose.Types.ObjectId;
     points: number;
     favoriteCourses: {
-      idCourse: mongoose.Types.ObjectId;
+      _id: mongoose.Types.ObjectId;
       name: string;
     }[];
   }[];

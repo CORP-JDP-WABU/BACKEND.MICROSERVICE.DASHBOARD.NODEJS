@@ -3,8 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import * as schemas from 'src/common/schemas';
 import { AppController } from './app.controller';
 import configuration from './config/configuration';
+import { DashboardController } from './dashboard.controller';
+import { DashboardService } from './dashboard.service';
 
 @Module({
   imports: [
@@ -20,6 +23,20 @@ import configuration from './config/configuration';
       }),
       inject: [ConfigService],
     }),
+    MongooseModule.forFeature([
+      {
+        name: schemas.Dashboards.name,
+        schema: schemas.DashboardsSchema,
+      },
+      {
+        name: schemas.Universities.name,
+        schema: schemas.UniversitiesSchema,
+      },
+      {
+        name: schemas.Students.name,
+        schema: schemas.StudentsSchema,
+      },
+    ]),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -29,12 +46,13 @@ import configuration from './config/configuration';
       }),
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, DashboardController],
   providers: [
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    DashboardService,
   ],
 })
 export class AppModule {}
