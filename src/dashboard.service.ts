@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import * as schemas from 'src/common/schemas';
 import * as dto from 'src/common/dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -22,10 +22,15 @@ export class DashboardService {
   async dashboardByUniversityAndStudent(
     idUniversity: string,
     idStudent: string,
+    userDecorator: any
   ): Promise<dto.ResponseGenericDto> {
     this.logger.debug(
       `::dashboardByUniversityAndStudent::params::${idUniversity}-${idStudent}`,
     );
+
+    if (idStudent !== userDecorator.idStudent) {
+      throw new UnauthorizedException();
+    }
 
     const studentPromise = this.studentModel.findOne({
       _id: mongoose.Types.ObjectId(idStudent),
@@ -40,11 +45,11 @@ export class DashboardService {
     ]);
 
     if (!student) {
-      throw new exception.NotExistStudentRecoveryCustomException();
+      throw new exception.NotExistStudentRegisterCustomException('DASHBOARD_NOT_EXITS_STUDENT');
     }
 
     if (!university) {
-      throw new exception.NotExistUniversityRegisterCustomException();
+      throw new exception.NotExistUniversityRegisterCustomException('DASHBOARD_NOT_EXITS_UNIVERSITY');
     }
 
     const dashboard = await this.dashboardModel.findOne({ 
@@ -53,11 +58,12 @@ export class DashboardService {
     });
 
     if(!dashboard)
-        throw new exception.NotExistDashboardCustomException();
+        throw new exception.NotExistDashboardCustomException('DASHBOARD_NOT_EXITS');
 
-    const studentDashboard = dashboard.students.find(student => student._id.toString() == idStudent);
+    const { students } = dashboard;
 
-    const favoriteCourses = studentDashboard.favoriteCourses
+
+    this.logger.debug(`::dashboard::${JSON.stringify(dashboard)}`);
 
     return <dto.ResponseGenericDto>{
         message: 'Processo exitoso',
@@ -68,9 +74,9 @@ export class DashboardService {
                 ...dashboard.kpis
             },
             student: {
-                idStudent: studentDashboard._id.toString(),
-                points: studentDashboard.points,
-                favoriteCourses: favoriteCourses.map(course => {
+                idStudent: students._id.toString(),
+                points: students.points,
+                favoriteCourses: students.favoriteCourses.map(course => {
                     return {
                         idCourse: course._id.toString(),
                         name: course.name

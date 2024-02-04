@@ -6,6 +6,7 @@ export type DashboardsDocument = Dashboards & mongoose.Document;
 
 @Schema({ collection: 'Dashboards', autoIndex: true })
 export class Dashboards {
+
   @Prop(
     raw({
       _id: mongoose.Types.ObjectId,
@@ -16,7 +17,7 @@ export class Dashboards {
     _id: mongoose.Types.ObjectId;
     name: string;
   };
-
+  
   @Prop(
     raw({
       manyStudentConnected: Number,
@@ -32,16 +33,12 @@ export class Dashboards {
 
   @Prop(
     raw({
-      type: [
+      _id: mongoose.Types.ObjectId,
+      points: Number,
+      favoriteCourses: [
         {
           _id: mongoose.Types.ObjectId,
-          points: Number,
-          favoriteCourses: [
-            {
-              _id: mongoose.Types.ObjectId,
-              name: String,
-            },
-          ],
+          name: String,
         },
       ],
     }),
@@ -53,7 +50,7 @@ export class Dashboards {
       _id: mongoose.Types.ObjectId;
       name: string;
     }[];
-  }[];
+  };
 
   @Prop({
     type: AuditPropertiesSchema,

@@ -1,19 +1,19 @@
 import { ConflictException } from '@nestjs/common';
 
-export class NotExistStudentRecoveryCustomException extends ConflictException {
-  constructor() {
-    super(`El dato del estudiante no existe`);
+export class NotExistStudentRegisterCustomException extends ConflictException {
+  constructor(customCode: string) {
+    super(`El dato del estudiante no existe [${customCode}`);
   }
 }
 
 export class NotExistUniversityRegisterCustomException extends ConflictException {
-  constructor() {
-    super(`El dato de la universidad no existe`);
+  constructor(customCode: string) {
+    super(`El dato de la universidad no existe [${customCode}`);
   }
 }
 
 export class NotExistDashboardCustomException extends ConflictException {
-  constructor() {
-    super(`El dashboard no esta habilitado para el estudiante`);
+  constructor(customCode: string) {
+    super(`El dashboard no esta habilitado para el estudiante [${customCode}`);
   }
 }
