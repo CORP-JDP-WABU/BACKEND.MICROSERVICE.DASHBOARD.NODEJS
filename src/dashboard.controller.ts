@@ -7,8 +7,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { UserDecoratorInterface } from './common/interfaces';
 import { UserDecorator } from './common/decorator';
 
-@ApiBearerAuth()
-@UseGuards(SecurityGuard, ThrottlerGuard)
+
 @Controller('dashboard/v1.0')
 export class DashboardController {
   
