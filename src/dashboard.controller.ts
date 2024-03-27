@@ -24,4 +24,26 @@ export class DashboardController {
   ): Promise<dto.ResponseGenericDto> {
     return this.dashboardService.dashboardByUniversityAndStudent(idUniversity, idStudent, userDecorator);
   }
+
+
+  @Get('rendering-html')
+  renderingHtml(
+  ): String {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hola Mundo</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Hola Mundo</h1>
+            <p>¡Bienvenido a mi página web!</p>
+        </div>
+    </body>
+    </html>`;
+  }
 }
