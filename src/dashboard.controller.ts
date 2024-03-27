@@ -35,13 +35,9 @@ export class DashboardController {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hola Mundo</title>
-        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div class="container">
-            <h1>Hola Mundo</h1>
-            <p>¡Bienvenido a mi página web!</p>
-        </div>
+    <img src="https://wabu-development.s3.amazonaws.com/university/universidadperuanadecienciasaplicadas/course/quimica/trabajosfinales/Caso+05_Soluciones+para+tratamiento+de+agua+contaminada+(1).docx" alt="Imagen desde S3">
     </body>
     </html>`;
   }
